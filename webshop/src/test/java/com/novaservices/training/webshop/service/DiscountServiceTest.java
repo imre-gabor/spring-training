@@ -8,14 +8,17 @@ import java.util.List;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.novaservices.training.webshop.dao.ProductRepository;
 import com.novaservices.training.webshop.model.Product;
 
+@ExtendWith(MockitoExtension.class)
 public class DiscountServiceTest {
 	
 	@InjectMocks
@@ -24,10 +27,11 @@ public class DiscountServiceTest {
 	@Mock
 	ProductRepository productRepository;
 
-	@BeforeEach
-	void init() {
-		MockitoAnnotations.initMocks(this);
-	}
+	//nem kell a MockitoExtension miatt
+//	@BeforeEach
+//	void init() {
+//		MockitoAnnotations.initMocks(this);
+//	}
 
 	@Test
 	void testThatPricesOfProductsWithGivenNameAreDecreased() throws Exception {
@@ -39,7 +43,7 @@ public class DiscountServiceTest {
 				new Product(productName, 200.0));
 		
 		//ARRANGE
-		Mockito.when(productRepository.findByName(productName)).thenReturn(products);
+		when(productRepository.findByName(productName)).thenReturn(products);
 		
 		//ACT
 		discountService.discountProductsByName(productName, 10);
