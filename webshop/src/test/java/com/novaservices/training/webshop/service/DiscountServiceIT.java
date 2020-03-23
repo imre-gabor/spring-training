@@ -20,8 +20,8 @@ import com.novaservices.training.webshop.model.Product;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
-@Transactional
-//@ActiveProfiles("test") --> alternatív megoldás a @Transactional helyett, a @DirtiesContext-tel együtt
+//@Transactional
+//@ActiveProfiles("test") //--> alternatív megoldás a @Transactional helyett, a @DirtiesContext-tel együtt
 public class DiscountServiceIT {
 
 	@Autowired
