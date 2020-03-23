@@ -36,13 +36,13 @@ public class DiscountServiceTest {
 	@Test
 	void testThatPricesOfProductsWithGivenNameAreDecreased() throws Exception {
 		
+		//ARRANGE
 		String productName = "abc";
 		
 		List<Product> products = Arrays.asList(
 				new Product(productName, 100.0), 
 				new Product(productName, 200.0));
 		
-		//ARRANGE
 		when(productRepository.findByName(productName)).thenReturn(products);
 		
 		//ACT
