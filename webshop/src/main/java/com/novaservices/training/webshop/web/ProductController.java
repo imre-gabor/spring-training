@@ -6,6 +6,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -84,5 +86,11 @@ public class ProductController {
 	public List<Product> search1(@RequestBody Product example){
 		return productService.search1(example);
 	}
+
+	@PostMapping("/search2")
+	public Page<Product> search2(@RequestBody Product example, Pageable pageable){
+		return productService.search2(example, pageable);
+	}
+
 	
 }
