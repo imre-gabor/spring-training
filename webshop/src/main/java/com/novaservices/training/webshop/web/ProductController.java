@@ -23,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.novaservices.training.webshop.dao.ProductRepository;
 import com.novaservices.training.webshop.model.Modify;
 import com.novaservices.training.webshop.model.Product;
+import com.novaservices.training.webshop.service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")
@@ -30,6 +31,9 @@ public class ProductController {
 
 	@Autowired
 	ProductRepository productRepository;
+	
+	@Autowired
+	ProductService productService;
 	
 
 	@GetMapping
@@ -74,6 +78,11 @@ public class ProductController {
 		try {
 			productRepository.deleteById(id);
 		}catch (EmptyResultDataAccessException e) {}
+	}
+	
+	@PostMapping("/search1")
+	public List<Product> search1(@RequestBody Product example){
+		return productService.search1(example);
 	}
 	
 }

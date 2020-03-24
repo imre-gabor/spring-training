@@ -17,12 +17,12 @@ public class Product {
 	@Size(min = 5, max = 10)
 	@NotNull
 	private String name;
-	private double price;
+	private Double price;
 	
 	public Product() {
 	}
 	
-	public Product(String name, double price) {
+	public Product(String name, Double price) {
 		super();
 		this.name = name;
 		this.price = price;
@@ -40,10 +40,10 @@ public class Product {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	
