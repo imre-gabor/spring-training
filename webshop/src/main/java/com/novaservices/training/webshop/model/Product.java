@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 public class Product {
 
 	@Id
+	@NotNull(groups = Modify.class)
 	@GeneratedValue
 	private Long id;
 	
