@@ -11,9 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.convert.QueryByExamplePredicateBuilder;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.novaservices.training.webshop.dao.CategoryRepository;
 import com.novaservices.training.webshop.dao.ProductRepository;
+import com.novaservices.training.webshop.model.Category;
 import com.novaservices.training.webshop.model.Product;
 
 @Service
@@ -21,6 +24,9 @@ public class ProductService {
 	
 	@Autowired
 	ProductRepository productRepository;
+	
+	@Autowired
+	CategoryRepository categoryRepository;
 	
 
 	public List<Product> search1(Product example) {
@@ -100,6 +106,23 @@ public class ProductService {
 						.withIgnorePaths("price")
 						.withStringMatcher(StringMatcher.STARTING))) 
 			;
+	}
+	
+	@Transactional
+	public Product createProductWithCategory(Product product, String categoryName) {
+		List<Category> categories = categoryRepository.findByName(categoryName);
+		Category category = null;
+		if(categories.isEmpty()) {
+			category = new Category();
+			category.setName(categoryName);
+			category = categoryRepository.save(category);
+		} else {
+			category = categories.get(0);
+		}
+		
+		product = productRepository.save(product);
+		category.addProduct(product);
+		return product;
 	}
 	
 }
