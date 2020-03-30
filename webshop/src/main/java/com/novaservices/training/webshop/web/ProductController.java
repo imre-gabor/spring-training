@@ -27,6 +27,10 @@ import com.novaservices.training.webshop.model.Modify;
 import com.novaservices.training.webshop.model.Product;
 import com.novaservices.training.webshop.service.ProductService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import springfox.documentation.annotations.ApiIgnore;
+
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -93,7 +97,15 @@ public class ProductController {
 	}
 	
 	@PostMapping("/search3")
-	public Page<Product> search3(@RequestBody Product example, Pageable pageable){
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="page", dataType = "integer", paramType = "query", defaultValue = "0",
+				value = "Result page (0..N)"),
+		@ApiImplicitParam(name="size", dataType = "integer", paramType = "query", defaultValue = "20",
+			value = "Page size"),
+		@ApiImplicitParam(name="sort", dataType = "string", paramType = "query", allowMultiple = true,
+			value = "Sort fields, e.g. id,desc")
+	})
+	public Page<Product> search3(@RequestBody Product example, @ApiIgnore Pageable pageable){
 		return productService.search3(example, pageable);
 	}
 
