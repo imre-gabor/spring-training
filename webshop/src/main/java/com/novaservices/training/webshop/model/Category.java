@@ -8,7 +8,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+//@JsonIdentityInfo(
+//		generator = ObjectIdGenerators.PropertyGenerator.class,
+//		property = "id") //4. megoldás
+@JsonView(Views.Public.class)
 public class Category {
 
 	@Id
@@ -18,6 +29,9 @@ public class Category {
 	private String name;
 	
 	@OneToMany(mappedBy = "category")
+	//@JsonIgnore //2. megoldás
+//	@JsonManagedReference //3. megoldás
+	@JsonView(Views.WithProducts.class)
 	private Set<Product> products;
 
 	public Long getId() {

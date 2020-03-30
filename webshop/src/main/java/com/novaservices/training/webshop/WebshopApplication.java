@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.novaservices.training.webshop.dao.ProductRepository;
 import com.novaservices.training.webshop.model.Product;
 import com.novaservices.training.webshop.service.DiscountService;
+import com.novaservices.training.webshop.service.ProductService;
 
 @SpringBootApplication
 public class WebshopApplication implements CommandLineRunner {
@@ -17,6 +18,9 @@ public class WebshopApplication implements CommandLineRunner {
 	
 	@Autowired
 	DiscountService discountService;
+	
+	@Autowired
+	ProductService productService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebshopApplication.class, args);
@@ -30,6 +34,14 @@ public class WebshopApplication implements CommandLineRunner {
 		productRepository.save(new Product("def", 200.0));
 		discountService.discountProductsByName("abc", 10);
 		productRepository.findAll().forEach(System.out::println);
+		*/
+		
+		/*
+		productService.createProductWithCategory(new Product("product1_1", 100.0),  "cat1");
+		productService.createProductWithCategory(new Product("product1_2", 100.0),  "cat1");
+		
+		productService.createProductWithCategory(new Product("product2_1", 100.0),  "cat2");
+		productService.createProductWithCategory(new Product("product2_2", 100.0),  "cat2");
 		*/
 	}
 

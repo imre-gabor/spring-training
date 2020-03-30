@@ -7,7 +7,16 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+//@JsonIdentityInfo(
+//		generator = ObjectIdGenerators.PropertyGenerator.class,
+//		property = "id") //4. megoldás
+@JsonView(Views.Public.class)
 public class Product {
 
 	@Id
@@ -18,9 +27,13 @@ public class Product {
 	@Size(min = 5, max = 10)
 	@NotNull
 	private String name;
+	
+	@JsonView({Views.Internal.class, Views.InternalWithCategories.class})
 	private Double price;
 	
 	@ManyToOne
+//	@JsonBackReference //3. megoldás
+	@JsonView({Views.WithCategories.class, Views.InternalWithCategories.class})
 	private Category category;
 	
 	public Product() {

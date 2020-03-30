@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.novaservices.training.webshop.dao.ProductRepository;
 import com.novaservices.training.webshop.model.Modify;
 import com.novaservices.training.webshop.model.Product;
+import com.novaservices.training.webshop.model.Views;
 import com.novaservices.training.webshop.service.ProductService;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -42,9 +44,33 @@ public class ProductController {
 	ProductService productService;
 	
 
+	@JsonView({Views.InternalWithCategories.class})
 	@GetMapping
-	public List<Product> getAll(){
-		return productRepository.findAll();
+	public List<Product> getAll() {
+		//return productRepository.findAll();
+		
+		
+//		List<Product> products = productRepository.findAll();
+		
+		//1. megoldás JSON serialize problémára: kézzel nullozás
+//		products.forEach(p ->{
+//			Category category = p.getCategory();
+//			if(category != null)
+//				category.setProducts(null);
+//		});
+//		
+		//2. megoldás: @JsonIgnore a Category.products mezőre --> túl durva, Category listázásnál sem látszanak a productok
+		
+		//3. megoldás: @JsonManaged/@JsonBackReference --> category listázás OK, de product listázásnál nem látszik a category
+		
+		//4. megoldás: @JsonIdentityInfo --> product listázáskor bizonyos productok csak id-vel fognak szerepelni
+		//ha a category products listájában egyszer már szerializálva voltak
+		List<Product> products = productRepository.findAllWithCategoriesProducts();
+		
+		//5. megoldás: @JsonView --> sok annotáció
+		
+		return products;
+		
 	}
 	
 	@GetMapping("/{id}")
