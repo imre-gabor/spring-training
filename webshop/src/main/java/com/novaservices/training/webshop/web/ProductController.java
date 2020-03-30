@@ -91,6 +91,11 @@ public class ProductController {
 	public Page<Product> search2(@RequestBody Product example, Pageable pageable){
 		return productService.search2(example, pageable);
 	}
+	
+	@PostMapping("/search3")
+	public List<Product> search3(@RequestBody Product example){
+		return productService.search3(example);
+	}
 
 	
 }
