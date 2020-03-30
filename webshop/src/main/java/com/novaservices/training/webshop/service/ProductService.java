@@ -65,7 +65,7 @@ public class ProductService {
 		return (product, cq, cb) -> cb.equal(product.get("price"), example.getPrice());
 	}
 	
-	public List<Product> search3(Product example) {
+	public Page<Product> search3(Product example, Pageable pageable) {
 		Specification<Product> combinedSpec = Specification.where(null);
 		
 		if(example.getPrice() != null)
@@ -81,7 +81,7 @@ public class ProductService {
 		//második megoldás: használjuk újra azt, amit az Example-s keresés már tud
 		combinedSpec = combinedSpec.and(byFieldsExceptPrice(example));
 		
-		return productRepository.findAll(combinedSpec);
+		return productRepository.findAll(combinedSpec, pageable);
 	}
 	
 	
