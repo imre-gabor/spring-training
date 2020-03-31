@@ -52,4 +52,28 @@ public class ProductControllerIT {
 			.andExpect(jsonPath("$[0].price", is(product1.getPrice())));
 	}
 	
+	@Test
+	void testSaveProduct2() throws Exception {
+		
+		//ARRANGE
+		Product product1 = new Product("prod1", 100.0);
+
+		//ACT
+		mvc.perform(post("/api/products")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(new ObjectMapper().writeValueAsString(product1))
+				)
+		//ASSERT		
+			.andExpect(status().isOk());
+		
+		mvc.perform(
+			get("/api/products")
+			.contentType(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$", hasSize(1)))
+			.andExpect(jsonPath("$[0].name", is(product1.getName())))
+			.andExpect(jsonPath("$[0].price", is(product1.getPrice())));
+	}
+	
 }
