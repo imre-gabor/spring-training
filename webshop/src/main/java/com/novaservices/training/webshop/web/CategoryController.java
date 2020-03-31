@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.novaservices.training.webshop.dao.CategoryRepository;
+import com.novaservices.training.webshop.dto.CategoryDto;
+import com.novaservices.training.webshop.mapper.CategoryMapper;
 import com.novaservices.training.webshop.model.Category;
 import com.novaservices.training.webshop.model.Views;
 
@@ -24,4 +26,11 @@ public class CategoryController {
 	public List<Category> getAll(){
 		return categoryRepository.findAllWithProducts();
 	}
+	
+	@GetMapping("/dto")
+	public List<CategoryDto> getAllDtos(){
+		return CategoryMapper.INSTANCE
+				.categoriesToDtos(categoryRepository.findAllWithProducts());
+	}
+	
 }
