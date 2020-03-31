@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.novaservices.training.webshop.dao.ProductRepository;
 import com.novaservices.training.webshop.dto.CategoryDto;
 import com.novaservices.training.webshop.dto.ProductDto;
+import com.novaservices.training.webshop.mapper.ProductMapper;
 import com.novaservices.training.webshop.model.Category;
 import com.novaservices.training.webshop.model.Modify;
 import com.novaservices.training.webshop.model.Product;
@@ -81,25 +82,26 @@ public class ProductController {
 	public List<ProductDto> getAllDtos() {
 		List<Product> allProducts = productRepository.findAll();
 		
-		List<ProductDto> dtos = new ArrayList<>();
 		//megoldás kézzel
-		for (Product product : allProducts) {
-			ProductDto productDto = new ProductDto();
-			productDto.setId(product.getId());
-			productDto.setName(product.getName());
-			productDto.setPrice(product.getPrice());
-			Category category = product.getCategory();
-			if(category != null) {
-				CategoryDto catDto = new CategoryDto();
-				productDto.setCategory(catDto);
-				catDto.setId(category.getId());
-				catDto.setName(category.getName());
-			}
-			
-			dtos.add(productDto);
-		}
-		
-		return dtos;
+//		List<ProductDto> dtos = new ArrayList<>();
+//		for (Product product : allProducts) {
+//			ProductDto productDto = new ProductDto();
+//			productDto.setId(product.getId());
+//			productDto.setName(product.getName());
+//			productDto.setPrice(product.getPrice());
+//			Category category = product.getCategory();
+//			if(category != null) {
+//				CategoryDto catDto = new CategoryDto();
+//				productDto.setCategory(catDto);
+//				catDto.setId(category.getId());
+//				catDto.setName(category.getName());
+//			}
+//			
+//			dtos.add(productDto);
+//		}
+//		
+//		return dtos;
+		return ProductMapper.INSTANCE.productsToDtos(allProducts);
 	}
 	
 	@GetMapping("/{id}")
