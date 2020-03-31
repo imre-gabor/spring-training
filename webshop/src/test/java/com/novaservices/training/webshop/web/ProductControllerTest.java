@@ -14,25 +14,22 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.novaservices.training.webshop.WebshopApplication;
 import com.novaservices.training.webshop.dao.ProductRepository;
 import com.novaservices.training.webshop.model.Category;
 import com.novaservices.training.webshop.model.Product;
 
-@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-@WebMvcTest
-@ContextConfiguration(classes= {WebshopApplication.class})
-@ComponentScan(basePackageClasses = WebshopApplication.class)
+//@AutoConfigureTestDatabase --> a biztonság kedvéért
 public class ProductControllerTest {
 
 	@Autowired
@@ -68,7 +65,7 @@ public class ProductControllerTest {
 			.andExpect(jsonPath("$", hasSize(2)))
 			.andExpect(jsonPath("$[0].name", is(product1.getName())))
 			.andExpect(jsonPath("$[0].category.name", is(cat.getName())))
-			.andExpect(jsonPath("$[0].category.products", nullValue()));
+			.andExpect(jsonPath("$[0].category.products").doesNotExist());
 			
 		
 	}
