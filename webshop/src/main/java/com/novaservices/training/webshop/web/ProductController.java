@@ -1,5 +1,6 @@
 package com.novaservices.training.webshop.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -24,6 +25,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.novaservices.training.webshop.dao.ProductRepository;
+import com.novaservices.training.webshop.dto.CategoryDto;
+import com.novaservices.training.webshop.dto.ProductDto;
+import com.novaservices.training.webshop.model.Category;
 import com.novaservices.training.webshop.model.Modify;
 import com.novaservices.training.webshop.model.Product;
 import com.novaservices.training.webshop.model.Views;
@@ -71,6 +75,31 @@ public class ProductController {
 		
 		return products;
 		
+	}
+	
+	@GetMapping("/dto")
+	public List<ProductDto> getAllDtos() {
+		List<Product> allProducts = productRepository.findAll();
+		
+		List<ProductDto> dtos = new ArrayList<>();
+		//megoldás kézzel
+		for (Product product : allProducts) {
+			ProductDto productDto = new ProductDto();
+			productDto.setId(product.getId());
+			productDto.setName(product.getName());
+			productDto.setPrice(product.getPrice());
+			Category category = product.getCategory();
+			if(category != null) {
+				CategoryDto catDto = new CategoryDto();
+				productDto.setCategory(catDto);
+				catDto.setId(category.getId());
+				catDto.setName(category.getName());
+			}
+			
+			dtos.add(productDto);
+		}
+		
+		return dtos;
 	}
 	
 	@GetMapping("/{id}")
