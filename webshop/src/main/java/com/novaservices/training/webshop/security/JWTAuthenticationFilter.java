@@ -23,10 +23,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
-	private static final String BEARER = "Bearer ";
-	private static final String AUTHORIZATION = "Authorization";
-	private static final String JWT_SECRET = "mysecret";
-	private static final String AUTHORITIES = "authorities";
+	public static final String BEARER = "Bearer ";
+	public static final String AUTHORIZATION = "Authorization";
+	public static final String JWT_SECRET = "mysecret";
+	public static final String AUTHORITIES = "authorities";
 	private AuthenticationManager authenticationManager;
 
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {

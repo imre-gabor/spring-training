@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.novaservices.training.webshop.security.JWTAuthenticationFilter;
+import com.novaservices.training.webshop.security.JWTAuthorizationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -48,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		    .antMatchers("/**").denyAll()
 	    .and()
 	    	.addFilter(new JWTAuthenticationFilter(authenticationManager()))
-	    	
+	    	.addFilter(new JWTAuthorizationFilter(authenticationManager()))
 	    	.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 	    ;
 	}
