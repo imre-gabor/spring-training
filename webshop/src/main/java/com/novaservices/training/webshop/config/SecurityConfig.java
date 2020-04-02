@@ -11,9 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
 
 import com.novaservices.training.webshop.security.JWTAuthenticationFilter;
 import com.novaservices.training.webshop.security.JWTAuthorizationFilter;
+import com.novaservices.training.webshop.security.StatelessCsrfFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -50,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	    .and()
 	    	.addFilter(new JWTAuthenticationFilter(authenticationManager()))
 	    	.addFilter(new JWTAuthorizationFilter(authenticationManager()))
+	    	.addFilterBefore(new StatelessCsrfFilter(), CsrfFilter.class)
 	    	.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 	    ;
 	}
