@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.novaservices.training.webshop.dao.ProductRepository;
 import com.novaservices.training.webshop.model.Product;
@@ -11,6 +12,7 @@ import com.novaservices.training.webshop.service.DiscountService;
 import com.novaservices.training.webshop.service.ProductService;
 
 @SpringBootApplication
+@EnableScheduling
 public class WebshopApplication implements CommandLineRunner {
 	
 	@Autowired
